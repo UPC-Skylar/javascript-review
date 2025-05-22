@@ -15,7 +15,7 @@ export class Money{
     constructor({amount, currency}){
         if(!Number.isFinite(amount) || amount < 0)
             throw new ValidationError(`Amount must be a non-negative number`);
-        if(!currency instanceof Currency)
+        if(!(currency instanceof Currency))
             throw new ValidationError('Currency must be an instance of Currency');
         this._amount = Number(amount.toFixed(2));
         this._currency = currency;
@@ -32,7 +32,6 @@ export class Money{
      * @returns {Currency}
      */
     get currency(){return this._currency;}
-
 
     /**
      * Add another Money instance to this one
@@ -53,7 +52,7 @@ export class Money{
     multiply(multiplier){
         if(!Number.isFinite(multiplier) || multiplier < 0)
             throw new ValidationError(`Multiplier must be a non-negative number`);
-        return new Money({amount: this._amount + multiplier, currency: this._currency});
+        return new Money({amount: this._amount * multiplier, currency: this._currency});
     }
 
     /**
